@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- <script src="/Scripts/vue.js"></script> -->
+    <script src="https://unpkg.com/vue@2.6.11"></script>
+    <script src="https://unpkg.com/http-vue-loader"></script>
+    <style>
+        div {
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app1">
+        <my-com my-msg="第1種" :parent-msg="msg"></my-com>
+    </div>
+    <div id="app2">
+        <my-com my-msg="第2種" :parent-msg="msg"></my-com>
+    </div>
+    <div id="app3">
+        <my-com my-msg="第3種" :parent-msg="msg"></my-com>
+    </div>
+    <div id="app4">
+        <my-com my-msg="第4種" :parent-msg="msg"></my-com>
+    </div>
+    <!-- 四種呼叫httpVueLoader的方法 -->
+    <!-- 第一種 -->
+    <script>
+        var app = new Vue({
+            el: "#app1",
+            data: {
+                msg: "我是父層的data ~ "
+            },
+            components: {
+                'my-com': httpVueLoader('my-com/my-com.vue')
+            }
+        })
+    </script>
+
+    <!-- 第二種 -->
+    <script>
+        httpVueLoader.register(Vue, 'my-com/my-com.vue');
+        var app = new Vue({
+            el: "#app2",
+            data: {
+                msg: "我是父層的data YA ~ "
+            },
+            components: ['my-com']
+        })
+    </script>
+
+
+    <!-- 第三種 -->
+    <script>
+        Vue.use(httpVueLoader);
+        var app = new Vue({
+            el: "#app3",
+            data: {
+                msg: "我是父層的data YA2 ~ "
+            },
+            components: {
+                'my-com': 'url:my-com/my-com.vue'
+            }
+        })
+    </script>
+
+
+    <!-- 第四種 -->
+    <script>
+        Vue.use(httpVueLoader);
+        var app = new Vue({
+            el: "#app4",
+            data: {
+                msg: "我是父層的data YA3 ~ "
+            },
+            components: ['url:my-com/my-com.vue']
+        })
+    </script>
+
+</body>
+
+</html>
